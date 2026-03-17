@@ -13,4 +13,10 @@ shap
 matplotlib
 seaborn
 
+opencv-python
+pillow
+tqdm
+
 jupyter
+ipykernel
+tensorboard

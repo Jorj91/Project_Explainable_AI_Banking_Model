@@ -17,3 +17,9 @@ results/figures/*
 # OS files
 .DS_Store
 Thumbs.db
+
+# data
+data/
+*.zip
+
+structure.txt
