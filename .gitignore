@@ -24,3 +24,6 @@ data/
 *.zip
 
 structure.txt
+
+# kaggle credentials
+kaggle.json
