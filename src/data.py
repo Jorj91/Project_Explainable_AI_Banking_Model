@@ -41,3 +41,45 @@ def get_image_files(data_path):
 def get_writers(root="data/signatures"):
     return list(Path(root).glob("signatures_*"))
 
+
+def split_writers(writers, train_ratio=0.7, val_ratio=0.15, seed=42):
+    random.seed(seed)
+    writers = writers.copy()
+    random.shuffle(writers)
+
+    n = len(writers)
+
+    train_writers = writers[:int(train_ratio*n)]
+    val_writers = writers[int(train_ratio*n):int((train_ratio+val_ratio)*n)]
+    test_writers = writers[int((train_ratio+val_ratio)*n):]
+
+    return train_writers, val_writers, test_writers
+
+
+def create_split_folders(base="data"):
+    base = Path(base)
+
+    for split in ["train", "val", "test"]:
+        for cls in ["genuine", "forged"]:
+            (base / split / cls).mkdir(parents=True, exist_ok=True)
+
+    print(f"Folder structure created under: {base.resolve()}")
+
+
+def copy_images(writer_list, split, base="data"):
+    base = Path(base)
+
+    for writer in writer_list:
+        for img in writer.glob("*.png"):
+
+            name = img.name.lower()
+
+            if "original" in name:
+                dst = base / split / "genuine" / img.name
+            elif "forgeries" in name:
+                dst = base / split / "forged" / img.name
+            else:
+                continue
+
+            shutil.copy(img, dst)
+
