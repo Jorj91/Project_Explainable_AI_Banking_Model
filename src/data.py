@@ -30,3 +30,14 @@ def download_and_extract_dataset(
 
     print("Dataset ready.")
 
+
+def get_image_files(data_path):
+    files = sorted(list(Path(data_path).glob("*.png")))
+    genuine = [f for f in files if "original" in f.name.lower()]
+    forged = [f for f in files if "forg" in f.name.lower()]
+    return files, genuine, forged
+
+
+def get_writers(root="data/signatures"):
+    return list(Path(root).glob("signatures_*"))
+
