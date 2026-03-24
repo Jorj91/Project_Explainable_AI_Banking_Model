@@ -6,9 +6,11 @@ import zipfile
 from pathlib import Path
 import shutil
 import random
+
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
+
 import matplotlib.pyplot as plt
 
 
@@ -145,3 +147,57 @@ def copy_images(writer_list, split, base):
 
             shutil.copy(img, dst)
 
+
+
+###########
+
+# image transformation and normalization
+def get_transforms():
+
+    train_transform = transforms.Compose([
+        transforms.Resize((224,224)),
+        transforms.Grayscale(num_output_channels=3),
+        transforms.RandomRotation(10),
+        transforms.RandomAffine(
+            degrees=0,
+            translate=(0.05,0.05),
+            scale=(0.9,1.1)
+        ),
+        transforms.ToTensor(),
+
+        transforms.Normalize(
+            mean=[0.5,0.5,0.5],
+            std=[0.5,0.5,0.5]
+        )
+    ])
+
+    test_transform = transforms.Compose([
+        transforms.Resize((224,224)),
+        transforms.Grayscale(num_output_channels=3),
+        transforms.ToTensor(),
+        transforms.Normalize(
+            mean=[0.5,0.5,0.5],
+            std=[0.5,0.5,0.5]
+        )
+    ])
+
+    return train_transform, test_transform
+
+# load datasets with ImageFolder
+def get_datasets(train_transform, test_transform):
+
+    train_dataset = ImageFolder("data/train", transform=train_transform)
+    val_dataset = ImageFolder("data/val", transform=test_transform)
+    test_dataset = ImageFolder("data/test", transform=test_transform)
+
+    return train_dataset, val_dataset, test_dataset
+
+
+# create dataloaders
+def get_dataloaders(train_dataset, val_dataset, test_dataset, batch_size=32):
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True) # each iteration returns 32 samples at a time
+    val_loader = DataLoader(val_dataset, batch_size=batch_size)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size)
+
+    return train_loader, val_loader, test_loader
