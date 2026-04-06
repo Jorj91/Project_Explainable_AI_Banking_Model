@@ -104,7 +104,7 @@ def get_image_files(data_path):
 
 
 def get_writers(root="data/signatures"):
-    return list(Path(root).glob("signatures_*"))
+    return sorted(Path(root).glob("signatures_*"))
 
 
 def split_writers(writers, train_ratio=0.7, val_ratio=0.15, seed=42):
@@ -126,9 +126,14 @@ def create_split_folders(base="data"):
 
     for split in ["train", "val", "test"]:
         for cls in ["genuine", "forged"]:
-            (base / split / cls).mkdir(parents=True, exist_ok=True)
+            path = base / split / cls
 
-    print("Folder structure created")
+            if path.exists():
+                shutil.rmtree(path)
+
+            path.mkdir(parents=True, exist_ok=True)
+
+    print("Folder structure created (clean)")
 
 
 def copy_images(writer_list, split, base):
