@@ -10,10 +10,13 @@ venv/
 # notebook checkpoints
 .ipynb_checkpoints
 
-# results
+# models
 results/models/*.pth
 results/models/*.pt
-results/figures/*
+
+# tensors / artifacts
+results/background/*.pt
+results/cases/*.pt
 
 # OS files
 .DS_Store
