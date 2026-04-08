@@ -95,12 +95,10 @@ This modular design allows **easy reuse, debugging, and experimentation.**
 
 ## 🚀 How to Run
 
-Open the notebook in Colab:
-
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)]
-(https://colab.research.google.com/github/Jorj91/Project_Explainable_AI_Banking_Model/blob/main/main.ipynb)
+Open the notebook in Colab: [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Jorj91/Project_Explainable_AI_Banking_Model/blob/main/main.ipynb)
 
 Or view the notebook on GitHub: [main.ipynb](https://github.com/Jorj91/Project_Explainable_AI_Banking_Model/blob/main/main.ipynb)
+
 
 ## 📈 Results
 
